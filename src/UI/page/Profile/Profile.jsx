@@ -9,16 +9,13 @@ export default function Profile() {
   const navigate = useNavigate();
 
   const logoutHandler = async () => {
-    // removeCookie("user");
     const { error, data } = await logoutUser();
     if (error) toast.error(error.message);
     else {
-      toast.success("Register successfully");
-      setCookie("user", data?.data);
+      toast.success("logout successfully");
+      removeCookie("user");
       navigate("/");
     }
-
-    // window.scrollTo(0, 0);
   };
   return (
     <div className="mx-36 mb-36 mt-10">

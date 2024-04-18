@@ -13,6 +13,7 @@ API.interceptors.response.use(
     return response;
   },
   (error) => {
+    console.log("🚀 ~ error:", error);
     return Promise.reject(error?.response?.data);
   }
 );

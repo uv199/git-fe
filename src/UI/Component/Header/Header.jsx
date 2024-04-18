@@ -12,7 +12,7 @@ export default function Header() {
   const { searchValue, setSearchValue, focus } = useSearch();
 
   let [cookie, setCookie] = useCookies([]);
-  console.log("🚀 ~ Header ~ cookie:", cookie.user)
+  console.log("🚀 ~ Header ~ cookie:", cookie);
 
   const inputRef = useRef("");
 
@@ -49,7 +49,7 @@ export default function Header() {
             className="py-1 rounded-md focus:!ring-0 border-none w-full"
           />
         </div>
-        {false ? (
+        {cookie?.user?.has?.("email") ? (
           <div className="flex gap-10 items-center justify-center">
             <NavLink
               to={"/profile"}

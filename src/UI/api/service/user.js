@@ -1,7 +1,7 @@
 import { API } from "../axios";
 
 export const registerUser = async (data) => {
-  console.log("🚀 ~ registerUser ~ data:", data)
+  console.log("🚀 ~ registerUser ~ data:", data);
   try {
     const response = await API.post("/user/signup", data);
     return { data: response.data, error: null };
@@ -20,9 +20,9 @@ export const loginUser = async (data) => {
 };
 
 export const logoutUser = async () => {
+  console.log("----->")
   try {
-    const response = await API.post("/user/login", data);
-    console.log("🚀 ~ logoutUser ~ response:", response)
+    const response = await API.post("/user/logout");
     return { data: response?.data, error: null };
   } catch (error) {
     return { data: null, error };
