@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -7,12 +7,7 @@ import { useForm } from "react-hook-form";
 import { loginUser, registerUser } from "../../api/service/user";
 import { Eye, EyeOff } from "lucide-react";
 
-const intialstate = {
-  email: "",
-  password: "",
-};
 export default function Login() {
-  let [credential, setCredential] = useState(intialstate);
   let [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -29,10 +24,13 @@ export default function Login() {
     if (formData.password !== formData.conPassword)
       return toast.error("Confirm password does not match");
     const { error, data } = await registerUser(formData);
+    console.log("🚀 ~ registerHandler ~ data:", data)
     if (error) toast.error(error.message);
     else {
       toast.success("Register successfully");
-      setCookie("user", data?.data);
+      setCookie("user", data?.data?.data);
+      setCookie("token", data?.data?.staredRepo);
+      setCookie("staredRepo", data?.data?.staredRepo);
       navigate("/");
     }
   };
@@ -49,7 +47,7 @@ export default function Login() {
             </p>
             <div className="mb-5">
               <label
-                for="firstName"
+                htmlFor="firstName"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 FIRST NAME *
@@ -71,7 +69,7 @@ export default function Login() {
             </div>
             <div className="mb-5">
               <label
-                for="lastName"
+                htmlFor="lastName"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 LAST NAME *
@@ -93,7 +91,7 @@ export default function Login() {
             </div>
             <div className="mb-5">
               <label
-                for="email"
+                htmlFor="email"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 E-MAIL *
@@ -117,7 +115,7 @@ export default function Login() {
             </div>
             <div className="mb-5">
               <label
-                for="contactNo"
+                htmlFor="contactNo"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 CONTACT NO *
@@ -139,7 +137,7 @@ export default function Login() {
             </div>
             <div className="mb-5">
               <label
-                for="password"
+                htmlFor="password"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 PASSWORD *
@@ -174,7 +172,7 @@ export default function Login() {
             </div>
             <div className="mb-5">
               <label
-                for="con-password"
+                htmlFor="con-password"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 CONFIRM - PASSWORD *
