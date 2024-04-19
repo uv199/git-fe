@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Search, User } from "lucide-react";
+import { Search, Star, User } from "lucide-react";
 import gitLogo from "../../../assets/git.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useSearch } from "../../../contaxt/SearchContaxt";
@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 
 export default function Header() {
   const [searchOption, setSearchOption] = useState([]);
-  const [modal, setModal] = useState(false);
   const [showDropDown, setShowDropDown] = useState(false);
   const navigate = useNavigate();
 
@@ -54,7 +53,11 @@ export default function Header() {
     }
   };
 
-  const toggle = () => setModal(!modal);
+  const onKeyHandler = (e) => {
+    if (e.key === "Enter") {
+      navigate("/user/" + searchValue);
+    }
+  };
   return (
     <>
       <div
@@ -79,6 +82,7 @@ export default function Header() {
               className=" text-gray-400 mx-2 my-1 "
             />
             <input
+              onKeyDown={(e) => onKeyHandler(e)}
               ref={inputRef}
               type="text"
               onBlur={(e) => setTimeout(() => setShowDropDown(false), 200)}
@@ -105,21 +109,26 @@ export default function Header() {
           </div>
         </div>
         {cookie.token ? (
-          <div className="flex gap-10 items-center justify-center">
-            <NavLink
-              to={"/profile"}
-              className="navigate_class cursor-pointer flex flex-col justify-center items-center mt-1"
-            >
-              <User onClick={toggle} role="button" strokeWidth={1} />
-              <span
-                role="button"
-                onClick={toggle}
-                className="tracking-widest text-[13px] text-decoration-none text-sm text-black"
+          <>
+            <div className="flex items-center justify-center mr-10 ">
+              <NavLink
+                to={"/starRepo"}
+                className="flex min-w-20 flex-col justify-center items-center mt-1"
               >
-                Account
-              </span>
-            </NavLink>
-          </div>
+                <Star role="button" strokeWidth={1} />
+                <p className="text-[13px] text-sm text-black">Stared repos</p>
+              </NavLink>
+            </div>
+            <div className="flex items-center justify-center">
+              <NavLink
+                to={"/profile"}
+                className="flex flex-col justify-center items-center mt-1"
+              >
+                <User role="button" strokeWidth={1} />
+                <p className=" text-[13px] text-sm text-black">Account</p>
+              </NavLink>
+            </div>
+          </>
         ) : (
           <button
             className="transition-colors duration-500 p-2 px-7 rounded-md border-2 !border-gray-600	bg-white text-gray-600 hover:text-white hover:bg-gray-600"

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSearch } from "../../../contaxt/SearchContaxt";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUserRepo, starHandlerApi } from "../../api/service/git";
+import { getUserRepo } from "../../api/service/git";
 import { toast } from "react-toastify";
 import PreviewModal from "./PreviewModal";
 import { ListGroup, ListGroupItem, Tooltip } from "flowbite-react";
 import { Eye, Star } from "lucide-react";
 import { useCookies } from "react-cookie";
+import { starHandlerApi } from "../../api/service/star";
 
 export default function GitProfilePage() {
   const [user, setUser] = useState({});
@@ -38,22 +39,26 @@ export default function GitProfilePage() {
     setData(e);
   };
 
-  const starHandler = async (repoName, userName, isStared) => {
+  const starHandler = async (e, isStared) => {
     if (!token) {
       return navigate("/login");
     }
-    let { data, error } = await starHandlerApi(
-      userName,
-      repoName,
+    let obj = {
+      owner: e?.owner?.login,
+      repoName: e?.name,
+      description: e?.description,
+      repoId: e?.id,
+      url: e?.html_url,
       isStared,
-      token
-    );
+    };
+    let { data, error } = await starHandlerApi(obj, token);
     if (error) toast.error(error);
     else {
-      setStarRepoList(data?.data?.staredRepo);
+      setStarRepoList(data?.data?.data);
       removeCookie("staredRepo");
-      setCookie("staredRepo", data?.data?.staredRepo);
-      toast.success("Repository stared");
+      setCookie("staredRepo", data?.data?.data);
+      let msg = isStared ? "removed" : "stared";
+      toast.success("Repository succesfully " + msg);
     }
   };
   return (
@@ -98,9 +103,7 @@ export default function GitProfilePage() {
                                    : "stroke-slate-400"
                                }
                                   `}
-                              onClick={() =>
-                                starHandler(e.name, e?.owner?.login, isStared)
-                              }
+                              onClick={() => starHandler(e, isStared)}
                             />
                           </Tooltip>
                         </div>

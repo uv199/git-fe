@@ -12,6 +12,7 @@ import Profile from "@page/Profile/Profile";
 import PageNotFound from "@page/Error404/PageNotFound";
 import Home from "@page/Home/Home";
 import { LoginProdtector, ProtectedRoute } from "./AuthRoute";
+import StarRepo from "../UI/page/StarRepo/StarRepo";
 
 export default function Router() {
   return (
@@ -32,6 +33,10 @@ export default function Router() {
           <Route
             path="/profile"
             element={<ProtectedRoute Component={<Profile />} />}
+          />
+          <Route
+            path="/starRepo"
+            element={<ProtectedRoute Component={<StarRepo />} />}
           />
           <Route path="*" Component={PageNotFound} />
         </Routes>

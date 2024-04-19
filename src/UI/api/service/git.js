@@ -17,16 +17,3 @@ export const getUserRepo = async (userName) => {
     return { data: null, error };
   }
 };
-
-export const starHandlerApi = async (owner, repoName, isRemove, token) => {
-  const headers = {
-    "x-token": token,
-  };
-  let data = { owner, repoName: repoName, isRemove };
-  try {
-    const response = await API.post("/git/star", data, { headers });
-    return { data: response.data, error: null };
-  } catch (error) {
-    return { data: null, error: error };
-  }
-};
