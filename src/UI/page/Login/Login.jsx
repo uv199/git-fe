@@ -13,7 +13,7 @@ export default function Login() {
     formState: { errors },
   } = useForm();
 
-  let [cookie, setCookie] = useCookies([]);
+  let [{ token }, setCookie] = useCookies([""]);
 
   const navigate = useNavigate();
 
@@ -22,8 +22,10 @@ export default function Login() {
     if (error) toast.error(error.message);
     else {
       toast.success("Login successfully");
-      setCookie("user", data?.data);
-      navigate("/");
+      setCookie("user", data?.data?.data);
+      setCookie("token", data?.data?.token);
+      setCookie("staredRepo", data?.data?.staredRepo);
+      navigate(-1);
     }
   };
 
@@ -41,7 +43,7 @@ export default function Login() {
             </p>
             <div className="mb-5">
               <label
-                for="email"
+                htmlFor="email"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 E-MAIL *
@@ -65,7 +67,7 @@ export default function Login() {
             </div>
             <div className="mb-5">
               <label
-                for="password"
+                htmlFor="password"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 PASSWORD *

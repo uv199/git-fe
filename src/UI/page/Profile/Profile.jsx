@@ -1,7 +1,6 @@
 import React from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { logoutUser } from "../../api/service/user";
 import { toast } from "react-toastify";
 
 export default function Profile() {
@@ -9,13 +8,10 @@ export default function Profile() {
   const navigate = useNavigate();
 
   const logoutHandler = async () => {
-    const { error, data } = await logoutUser();
-    if (error) toast.error(error.message);
-    else {
-      toast.success("logout successfully");
-      removeCookie("user");
-      navigate("/");
-    }
+    removeCookie("user");
+    removeCookie("token");
+    toast.success("User logout was successful");
+    navigate("/");
   };
   return (
     <div className="mx-36 mb-36 mt-10">
@@ -31,16 +27,10 @@ export default function Profile() {
             <span>EMAIL</span> : {user?.email}{" "}
           </li>
           <li className="py-3 border-b-2">
-            <span>ADDRESS</span> : {user?.address?.[0]?.add}
+            <span>GIT USR NAME</span> : {user?.gitUserName}
           </li>
-          <li className="py-3 border-b-2">
+          <li className="py-3 border-b-2 mb-5">
             <span>COUNTRY</span> : India
-          </li>
-          <li className="py-3 border-b-2">
-            <span>ZIP</span> : {user?.address?.[0]?.pincode}
-          </li>
-          <li className="py-3 mb-5 border-b-2">
-            <span>PHONE</span> : {user?.number}
           </li>
         </ul>
         <button
