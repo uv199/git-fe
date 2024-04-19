@@ -10,16 +10,12 @@ import { useCookies } from "react-cookie";
 
 export default function GitProfilePage() {
   const [user, setUser] = useState({});
-  console.log("🚀 ~ GitProfilePage ~ user:", user);
   const [data, setData] = useState({});
-  console.log("🚀 ~ GitProfilePage ~ data:", data)
   const [openModal, setOpenModal] = useState(false);
 
   const [{ staredRepo, token }, setCookie] = useCookies([]);
-  console.log("🚀 ~ GitProfilePage ~ token:", token);
 
   let { userName, focusToggle } = useParams();
-  console.log("🚀 ~ GitProfilePage ~ userName:", userName);
 
   const toggle = () => setOpenModal(!openModal);
   const navigate = useNavigate();
@@ -44,7 +40,7 @@ export default function GitProfilePage() {
     let { data, error } = await starHandlerApi(
       userName,
       repoName,
-      !isStared,
+      isStared,
       token
     );
     if (error) toast.error(error);

@@ -24,7 +24,6 @@ export default function Login() {
     if (formData.password !== formData.conPassword)
       return toast.error("Confirm password does not match");
     const { error, data } = await registerUser(formData);
-    console.log("🚀 ~ registerHandler ~ data:", data)
     if (error) toast.error(error.message);
     else {
       toast.success("Register successfully");
@@ -152,11 +151,7 @@ export default function Login() {
                     required: "password is require*",
                   })}
                 />
-                {errors.password && (
-                  <p className="text-red-500 text-sm">
-                    {errors?.password?.message}
-                  </p>
-                )}
+
                 {showPassword ? (
                   <Eye
                     className="text-gray-400 cursor-pointer"
@@ -169,6 +164,11 @@ export default function Login() {
                   />
                 )}
               </div>
+              {errors.password && (
+                <p className="text-red-500 text-sm">
+                  {errors?.password?.message}
+                </p>
+              )}
             </div>
             <div className="mb-5">
               <label

@@ -22,10 +22,9 @@ export const starHandlerApi = async (owner, repoName, isRemove, token) => {
   const headers = {
     "x-token": token,
   };
-  let data = { owner, repoName: repoName, isRemove:false };
+  let data = { owner, repoName: repoName, isRemove };
   try {
     const response = await API.post("/git/star", data, { headers });
-    console.log("🚀 ~ starHandlerApi ~ response:", response);
     return { data: response.data, error: null };
   } catch (error) {
     return { data: null, error: error };

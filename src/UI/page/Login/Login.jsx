@@ -19,7 +19,6 @@ export default function Login() {
 
   const loginHandler = async (formData) => {
     const { error, data } = await loginUser(formData);
-    console.log("🚀 ~ loginHandler ~ data:", data)
     if (error) toast.error(error.message);
     else {
       toast.success("Login successfully");

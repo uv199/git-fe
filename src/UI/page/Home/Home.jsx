@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 export default function Home() {
   const { focusToggle, setSearchValue } = useSearch();
   let [{ user, token }] = useCookies([""]);
-  console.log("🚀 ~ Home ~ user:", user);
   const navigate = useNavigate();
 
   useEffect(() => {
