@@ -136,6 +136,28 @@ export default function Login() {
             </div>
             <div className="mb-5">
               <label
+                htmlFor="contactNo"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                GIT USER NAME*
+              </label>
+              <input
+                type="text"
+                id="gitUserName"
+                className="bg-gray-100 border-none text-gray-900 text-sm rounded-lg focus:ring-gray-600  block w-full p-2.5 "
+                placeholder="Enter Git User Name "
+                {...register("gitUserName", {
+                  required: "UserName no is require*",
+                })}
+              />
+              {errors.contactNo && (
+                <p className="text-red-500 text-sm">
+                  {errors?.contactNo?.message}
+                </p>
+              )}
+            </div>
+            <div className="mb-5">
+              <label
                 htmlFor="password"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >

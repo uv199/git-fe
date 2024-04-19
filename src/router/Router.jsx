@@ -9,7 +9,7 @@ import GitProfilePage from "@page/GitProfilePage/GitProfilePage";
 import Login from "@page/Login/Login";
 import SignUp from "@page/SignUp/SignUp";
 import Profile from "@page/Profile/Profile";
-import Error404 from "@page/Error404/Error404";
+import PageNotFound from "@page/Error404/PageNotFound";
 import Home from "@page/Home/Home";
 import { LoginProdtector, ProtectedRoute } from "./AuthRoute";
 
@@ -33,7 +33,7 @@ export default function Router() {
             path="/profile"
             element={<ProtectedRoute Component={<Profile />} />}
           />
-          <Route path="*" Component={Error404} />
+          <Route path="/*" Component={PageNotFound} />
         </Routes>
         <FooterCom />
         <ToastContainer />
