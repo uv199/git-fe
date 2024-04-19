@@ -50,9 +50,9 @@ export default function GitProfilePage() {
     );
     if (error) toast.error(error);
     else {
+      setStarRepoList(data?.data?.staredRepo);
       removeCookie("staredRepo");
       setCookie("staredRepo", data?.data?.staredRepo);
-      setStarRepoList(data?.data?.staredRepo);
       toast.success("Repository stared");
     }
   };
