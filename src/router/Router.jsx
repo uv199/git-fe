@@ -33,7 +33,7 @@ export default function Router() {
             path="/profile"
             element={<ProtectedRoute Component={<Profile />} />}
           />
-          <Route path="/*" Component={PageNotFound} />
+          <Route path="*" Component={PageNotFound} />
         </Routes>
         <FooterCom />
         <ToastContainer />

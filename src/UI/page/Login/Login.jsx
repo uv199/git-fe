@@ -20,7 +20,7 @@ export default function Login() {
   const loginHandler = async (formData) => {
     const { error, data } = await loginUser(formData);
     if (error) toast.error(error.message);
-    else {
+    if (data) {
       toast.success("Login successfully");
       setCookie("user", data?.data?.data);
       setCookie("token", data?.data?.token);

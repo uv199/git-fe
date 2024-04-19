@@ -11,9 +11,14 @@ import { useCookies } from "react-cookie";
 export default function GitProfilePage() {
   const [user, setUser] = useState({});
   const [data, setData] = useState({});
+  let [starRepoList, setStarRepoList] = useState([]);
   const [openModal, setOpenModal] = useState(false);
 
-  const [{ staredRepo, token }, setCookie] = useCookies([]);
+  const [{ staredRepo, token }, setCookie, removeCookie] = useCookies([]);
+
+  useEffect(() => {
+    setStarRepoList(staredRepo);
+  }, [staredRepo]);
 
   let { userName, focusToggle } = useParams();
 
@@ -33,7 +38,7 @@ export default function GitProfilePage() {
     setData(e);
   };
 
-  const starHandler = async (repoName, isStared) => {
+  const starHandler = async (repoName, userName, isStared) => {
     if (!token) {
       return navigate("/login");
     }
@@ -45,7 +50,9 @@ export default function GitProfilePage() {
     );
     if (error) toast.error(error);
     else {
-      setCookie(data.data?.staredRepo);
+      removeCookie("staredRepo");
+      setCookie("staredRepo", data?.data?.staredRepo);
+      setStarRepoList(data?.data?.staredRepo);
       toast.success("Repository stared");
     }
   };
@@ -57,14 +64,14 @@ export default function GitProfilePage() {
         </div>
         <div className="w-[70%]">
           <h1 className="text-black text-3xl mb-4 unde">
-            <span className="text-black font-semibold une">NAME :</span>{" "}
+            <span className="text-black font-semibold une">NAME :</span>
             {user?.user?.login}
           </h1>
           {user?.data?.length > 0 ? (
             <div className="w-full border rounded-md overflow-y-scroll max-h-[50vh]">
               <ListGroup className="w-full">
                 {user?.data?.map?.((e, i) => {
-                  let isStared = staredRepo?.includes?.(e?.id);
+                  let isStared = starRepoList?.includes?.(e?.id);
                   return (
                     <ListGroupItem key={e?.id} className="w-full !cursor-none">
                       <div className="w-full flex justify-between items-center">
@@ -91,7 +98,9 @@ export default function GitProfilePage() {
                                    : "stroke-slate-400"
                                }
                                   `}
-                              onClick={() => starHandler(e.name, isStared)}
+                              onClick={() =>
+                                starHandler(e.name, e?.owner?.login, isStared)
+                              }
                             />
                           </Tooltip>
                         </div>

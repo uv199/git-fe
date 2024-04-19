@@ -25,12 +25,12 @@ export default function Login() {
       return toast.error("Confirm password does not match");
     const { error, data } = await registerUser(formData);
     if (error) toast.error(error.message);
-    else {
+    if (data) {
       toast.success("Register successfully");
-      setCookie("user", data?.data?.data);
-      setCookie("token", data?.data?.staredRepo);
-      setCookie("staredRepo", data?.data?.staredRepo);
       navigate("/");
+      setCookie("user", data?.data?.data);
+      setCookie("token", data?.data?.token);
+      setCookie("staredRepo", data?.data?.staredRepo);
     }
   };
 
