@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
-export default function Error404() {
+export default function PageNotFound() {
   const navigate = useNavigate();
   return (
     <div className="flex justify-center items-center flex-col min-w-[100vw] min-h-[64vh]">
