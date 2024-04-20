@@ -32,7 +32,7 @@ export default function StarRepo() {
     if (error) toast.error(error);
     else {
       removeCookie("staredRepo");
-      setCookie("staredRepo", data?.data);
+      setCookie("staredRepo", data?.data?.data);
       refetch();
     }
   };
